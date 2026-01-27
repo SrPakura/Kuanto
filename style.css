@@ -1,0 +1,172 @@
+:root {
+    --bg: #FFF8F0;
+    --ink: #000000;
+    --accent: #FF3366;
+    --border-w: 3px;
+    --shadow: 4px;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace; /* Brutalista clásico */
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--ink);
+    margin: 0;
+    padding: 0;
+    padding-bottom: 80px; /* Espacio para scroll */
+}
+
+/* Header Sticky */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: var(--border-w) solid var(--ink);
+    background: var(--bg);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+h1 {
+    font-size: 2rem;
+    margin: 0;
+    font-weight: 900;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+}
+
+/* Botones Brutalistas */
+.brutal-btn {
+    background: var(--accent);
+    color: var(--bg);
+    border: var(--border-w) solid var(--ink);
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: var(--shadow) var(--shadow) 0px var(--ink);
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.brutal-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--ink);
+}
+
+.brutal-btn.secondary {
+    background: var(--bg);
+    color: var(--ink);
+}
+
+.brutal-btn.small {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    background: #fff;
+    box-shadow: 2px 2px 0px var(--ink);
+}
+
+/* Lista de Cronómetros */
+main {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.timer-card {
+    background: #fff;
+    border: var(--border-w) solid var(--ink);
+    padding: 15px;
+    box-shadow: var(--shadow) var(--shadow) 0px var(--ink);
+    position: relative;
+}
+
+.timer-card.paused {
+    background: #e0e0e0;
+    border-style: dashed;
+}
+
+.timer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.timer-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0;
+    padding-right: 10px;
+    word-break: break-word;
+}
+
+.timer-display {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin: 10px 0;
+    display: block;
+    text-align: center;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 10px;
+}
+
+.timer-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.empty-state {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 1.5rem;
+    opacity: 0.5;
+    font-weight: bold;
+}
+
+/* Modal */
+dialog {
+    border: var(--border-w) solid var(--ink);
+    box-shadow: 8px 8px 0px var(--ink);
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    background: var(--bg);
+}
+
+dialog::backdrop {
+    background: rgba(0,0,0, 0.8);
+}
+
+input[type="text"] {
+    width: 100%;
+    border: var(--border-w) solid var(--ink);
+    padding: 10px;
+    font-size: 1.2rem;
+    margin: 10px 0 20px 0;
+    background: #fff;
+    border-radius: 0;
+    outline: none;
+}
+
+input[type="text"]:focus {
+    background: #ffe5ec;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
