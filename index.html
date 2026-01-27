@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CUÁNTO.</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#FF3366">
+    <link rel="apple-touch-icon" href="icon-192.png"> 
+    <!-- Nota: Necesitarás un icono llamado icon-192.png para que quede perfecto en iOS -->
+</head>
+<body>
+
+    <header>
+        <h1>CUÁNTO.</h1>
+        <button id="addBtn" class="brutal-btn">+</button>
+    </header>
+
+    <main id="timersList">
+        <!-- Aquí se inyectan los cronómetros con JS -->
+        <div class="empty-state">
+            <p>NO ESTÁS CONTANDO NADA.</p>
+            <p>DALE AL +</p>
+        </div>
+    </main>
+
+    <!-- Modal para crear/editar -->
+    <dialog id="timerModal" class="brutal-modal">
+        <form id="timerForm">
+            <label>TÍTULO DEL EVENTO</label>
+            <input type="text" id="titleInput" placeholder="EJ: SIN BEBER..." required autocomplete="off">
+            
+            <div class="modal-actions">
+                <button type="button" id="cancelBtn" class="brutal-btn secondary">CANCELAR</button>
+                <button type="submit" class="brutal-btn primary">GUARDAR</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
+</body>
+</html>
