@@ -1,10 +1,10 @@
 {
-  "name": "KUANTO.",
-  "short_name": "KUANTO.",
+  "name": "Kuanto.",
+  "short_name": "Kuanto.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#FFF8F0",
-  "theme_color": "#FF3366",
+  "background_color": "#1a1a1a",
+  "theme_color": "#1a1a1a",
   "icons": [
     {
       "src": "icon-192.png",
