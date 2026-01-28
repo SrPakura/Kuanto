@@ -1,67 +1,77 @@
-// Estado
-let timers = JSON.parse(localStorage.getItem('cuanto_timers')) || [];
+let timers = JSON.parse(localStorage.getItem('kuanto_timers')) || [];
 const timersList = document.getElementById('timersList');
 const modal = document.getElementById('timerModal');
 const form = document.getElementById('timerForm');
 const titleInput = document.getElementById('titleInput');
-let editingId = null;
 
-// Lógica de Renderizado
+// Renderizado
 function render() {
     timersList.innerHTML = '';
     
     if (timers.length === 0) {
-        timersList.innerHTML = `
-            <div class="empty-state">
-                <p>NADA POR AQUÍ.</p>
-                <p>DALE AL +</p>
-            </div>`;
+        timersList.innerHTML = `<div class="empty-state">// SIN DATOS.</div>`;
         return;
     }
 
     timers.forEach(timer => {
         const card = document.createElement('div');
-        card.className = `timer-card ${timer.paused ? 'paused' : ''}`;
+        card.className = `card ${timer.paused ? 'paused' : ''}`;
         
         const timeString = calculateTime(timer);
+        
+        // Estilo del título: // N...
+        // Cogemos la primera letra para ponerla en rosa y añadimos punto rosa al final
+        const titleText = timer.title;
+        const firstChar = titleText.charAt(0);
+        const restOfText = titleText.slice(1);
+
+        const htmlTitle = `
+            <span class="comment">//</span> 
+            <span class="accent">${firstChar}</span>${restOfText}<span class="accent">.</span>
+        `;
 
         card.innerHTML = `
-            <div class="timer-header">
-                <h3 class="timer-title">${timer.title}</h3>
-                <button class="brutal-btn small" onclick="deleteTimer(${timer.id})">X</button>
+            <div class="card-header">
+                ${htmlTitle}
             </div>
-            <div class="timer-display">${timeString}</div>
-            <div class="timer-controls">
-                <button class="brutal-btn small" onclick="togglePause(${timer.id})">
-                    ${timer.paused ? 'REANUDAR' : 'PAUSAR'}
-                </button>
-                <button class="brutal-btn small secondary" onclick="restartTimer(${timer.id})">REINICIAR</button>
+            
+            <!-- Click en la caja para Pausar/Reanudar -->
+            <div class="timer-box" onclick="togglePause(${timer.id})">
+                ${timeString}
+            </div>
+            
+            <div class="card-actions">
+                <button class="outline-btn" onclick="restartTimer(${timer.id})">Reiniciar</button>
+                <button class="outline-btn danger" onclick="deleteTimer(${timer.id})">Borrar</button>
             </div>
         `;
         timersList.appendChild(card);
     });
 }
 
-// Matemática del tiempo
 function calculateTime(timer) {
     let diff;
     if (timer.paused) {
         diff = timer.accumulated;
     } else {
         const now = Date.now();
-        // Tiempo total = (Ahora - Inicio) + Lo que ya llevaba acumulado antes
         diff = (now - timer.startTime) + (timer.accumulated || 0);
     }
 
+    // Minutos totales
     const totalMinutes = Math.floor(diff / 60000);
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
 
-    // Formato Brutalista 00H 00M
-    return `${hours}H ${minutes.toString().padStart(2, '0')}M`;
+    // Formato 00:00 (si pasa de 99h crece el ancho, pero mantiene estilo)
+    const hStr = hours.toString().padStart(2, '0');
+    const mStr = minutes.toString().padStart(2, '0');
+    
+    return `${hStr}:${mStr}`;
 }
 
-// Acciones
+// ---- Lógica de Datos (Igual que antes) ----
+
 function addTimer(title) {
     const newTimer = {
         id: Date.now(),
@@ -76,7 +86,7 @@ function addTimer(title) {
 }
 
 function deleteTimer(id) {
-    if(!confirm('¿BORRAR?')) return;
+    if(!confirm('// ¿CONFIRMAR BORRADO?')) return;
     timers = timers.filter(t => t.id !== id);
     save();
     render();
@@ -85,11 +95,9 @@ function deleteTimer(id) {
 function togglePause(id) {
     const timer = timers.find(t => t.id === id);
     if (timer.paused) {
-        // Reanudar: Seteamos nuevo inicio ahora
         timer.startTime = Date.now();
         timer.paused = false;
     } else {
-        // Pausar: Calculamos cuánto llevaba y lo guardamos
         const now = Date.now();
         timer.accumulated += (now - timer.startTime);
         timer.paused = true;
@@ -99,7 +107,7 @@ function togglePause(id) {
 }
 
 function restartTimer(id) {
-    if(!confirm('¿A CERO?')) return;
+    if(!confirm('// ¿REINICIAR CONTADOR?')) return;
     const timer = timers.find(t => t.id === id);
     timer.startTime = Date.now();
     timer.accumulated = 0;
@@ -109,27 +117,23 @@ function restartTimer(id) {
 }
 
 function save() {
-    localStorage.setItem('cuanto_timers', JSON.stringify(timers));
+    localStorage.setItem('kuanto_timers', JSON.stringify(timers));
 }
 
-// Sincronización con el reloj del sistema (Minuto exacto)
+// Sincronización exacta al minuto
 function syncClock() {
-    render(); // Render inicial
-    
+    render();
     const now = new Date();
-    // Calcular ms hasta el siguiente minuto exacto
     const msToNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
 
     setTimeout(() => {
         render();
-        // Una vez sincronizado, actualizamos cada 60s
         setInterval(render, 60000);
     }, msToNextMinute);
 }
 
-// Event Listeners UI
+// Event Listeners
 document.getElementById('addBtn').addEventListener('click', () => {
-    editingId = null;
     form.reset();
     modal.showModal();
 });
@@ -140,12 +144,10 @@ document.getElementById('cancelBtn').addEventListener('click', () => {
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const title = titleInput.value.trim();
-    if (title) {
-        addTimer(title);
+    if (titleInput.value.trim()) {
+        addTimer(titleInput.value.trim());
         modal.close();
     }
 });
 
-// Inicializar
 syncClock();
