@@ -3,37 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CUÁNTO.</title>
+    <title>Kuanto.</title>
+    <!-- Fuente JetBrains Mono de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#FF3366">
-    <link rel="apple-touch-icon" href="icon-192.png"> 
-    <!-- Nota: Necesitarás un icono llamado icon-192.png para que quede perfecto en iOS -->
+    <meta name="theme-color" content="#1a1a1a">
+    <link rel="apple-touch-icon" href="icon-192.png">
 </head>
 <body>
 
     <header>
-        <h1>CUÁNTO.</h1>
-        <button id="addBtn" class="brutal-btn">+</button>
+        <div class="logo"><span class="accent">K</span>uanto<span class="accent">.</span></div>
+        <button id="addBtn" class="primary-btn">Añadir</button>
     </header>
 
     <main id="timersList">
-        <!-- Aquí se inyectan los cronómetros con JS -->
-        <div class="empty-state">
-            <p>NO ESTÁS CONTANDO NADA.</p>
-            <p>DALE AL +</p>
-        </div>
+        <!-- Los cronómetros se inyectan aquí -->
     </main>
 
-    <!-- Modal para crear/editar -->
-    <dialog id="timerModal" class="brutal-modal">
+    <!-- Modal Oscuro -->
+    <dialog id="timerModal">
         <form id="timerForm">
-            <label>TÍTULO DEL EVENTO</label>
-            <input type="text" id="titleInput" placeholder="EJ: SIN BEBER..." required autocomplete="off">
+            <div class="modal-header">
+                <span class="comment">// NUEVO_EVENTO</span>
+            </div>
+            <input type="text" id="titleInput" placeholder="Nombre del evento..." required autocomplete="off">
             
             <div class="modal-actions">
-                <button type="button" id="cancelBtn" class="brutal-btn secondary">CANCELAR</button>
-                <button type="submit" class="brutal-btn primary">GUARDAR</button>
+                <button type="button" id="cancelBtn" class="outline-btn">Cancelar</button>
+                <button type="submit" class="primary-btn">Guardar</button>
             </div>
         </form>
     </dialog>
